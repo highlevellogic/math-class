@@ -33,7 +33,56 @@ exports.setArray = function (array) {
 exports.getArray = function (array) {
   return JSON.parse(array).arr;
 }
-// TZf0HE2WaF2Q2K022XVR
+function create2DPlot (xmin,xmax,func) {
+  let inc=1;
+  let height=window.innerHeight;
+  let width=window.innerWidth;
+  TESTER.style.height=height;
+  TESTER.style.width=width;
+  TESTER.style.textAlign="center";
+  let xa=[],ya=[];
+  let thisFunc = new Function('x',"return " + func);
+  for (var x=xmin; x<=xmax; x+=inc) {
+    xa.push(x);
+    ya.push(thisFunc(x));
+  }
+	Plotly.plot( TESTER, [{
+	x: xa,
+	y: ya }], {
+	margin: { t: 0 } } );
+}
+function create3DPlot (xmin,xmax,ymin,ymax,func) {
+  let inc=1;  // Might allow this to be specified by user.
+  let height=window.innerHeight;
+  let width=window.innerWidth;
+  // TESTER is set to document.getElementById('idname') as a reference to the div where this plot will go.
+  // Dimensions of the div are set to full screen.
+  TESTER.style.height=height;
+  TESTER.style.width=width;
+  TESTER.style.textAlign="center"; // centers the plot
+  
+  let xa=[],ya=[],za=[];
+  let thisFunc = new Function('x','y',"return " + func);
+  for (var x=xmin; x<=xmax; x+=inc) {
+    for (var y=ymin; y<=ymax; y+=inc) {
+      xa.push(x);
+      ya.push(y);
+      za.push(thisFunc(x,y));
+    }
+  }
+  var data=[
+    {
+      opacity:0.8,
+      color:'rgb(300,100,200)',
+      type: 'mesh3d',
+      x: xa,
+      y: ya,
+      z: za,
+    }
+];
+Plotly.newPlot(TESTER, data);
+}
+
 
 exports.plot1 = function () {
   Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows){
