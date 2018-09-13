@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+ <title>Plots</title>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <script src="examples.js"></script>
+ <script src="plotly.min.js"></script>
+ <script src="math-class.js"></script>
+<script>
+var PLOTAREA;
+function output (msg, elementID) {
+  if (elementID === undefined) elementID = "output";
+  if (msg === undefined) msg = "";
+  document.getElementById(elementID).innerHTML = msg;
+}
+function init () {
+  PLOTAREA = document.getElementById('plotarea');
+  startMyJS();
+}
+window.onload=init;
+</script>
+<style>
+#plotarea {
+   position: absolute;
+   top:0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin:auto;
+   align:center;
+   
+   width:90%;
+   height:90%;
+}
+</style>
+</head>
+<body>
+ <div id="output"></div>
+ <div id="plotarea"></div>
+</body>
+</html>
